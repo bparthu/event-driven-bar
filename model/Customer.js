@@ -10,8 +10,8 @@ class Customer extends BarObservable {
   #numberOfDrinks
   #currentDrink
 
-  constructor(name, bar) {
-    super(bar)
+  constructor(name) {
+    super(false)
     this.#name = name
     this.#waitThreshold = util.getRandomInt(CONSTANTS.CUSTOMER_WAIT_MIN_THRESHOLD, CONSTANTS.CUSTOMER_WAIT_MAX_THRESHOLD)
     this.#numberOfDrinks = util.getRandomInt(CONSTANTS.CUSTOMER_DRINKS_MIN, CONSTANTS.CUSTOMER_DRINKS_MAX)

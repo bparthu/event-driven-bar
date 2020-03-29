@@ -1,9 +1,8 @@
 const Event = require('../base')
 
 class Seated extends Event {
-  constructor(bar) {
-    super(bar)
-    this.bar = bar
+  constructor(bar, bartender) {
+    super(bar, bartender)
   }
 
   async run(target) {

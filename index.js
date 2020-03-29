@@ -6,6 +6,7 @@ const faker = require('faker')
 const BarManager = require('./model/BarManager')
 const Customer = require('./model/Customer')
 const CONSTANTS = require('./constants')
+const eventBus = require('./model/EventBus')
 
 BarManager
   .createBar('NodeJS beer bar', {
@@ -14,8 +15,8 @@ BarManager
   })
   .hireBartender()
   .open(async (bar) => {
-    for(let i=0; i<100000; i++) {
-      const customer = new Customer(`${faker.name.firstName()} ${faker.name.lastName()}`, bar)
+    for(let i=0; i<2; i++) {
+      const customer = new Customer(`${faker.name.firstName()} ${faker.name.lastName()}`)
       await customer.registerEvents()
       bar.emit('new-customer', customer)
     }
@@ -29,4 +30,5 @@ BarManager
       console.log(`loss count: ${bar.getLossCount()}`)
       
     })
+    
   })

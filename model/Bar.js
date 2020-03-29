@@ -11,7 +11,7 @@ class Bar extends BarObservable {
   #lossCount
 
   constructor(name, config) {
-    super()
+    super(true)
     this.#name = name
     this.#seating = new Queue(config.seatingCapacity)
     this.#waitQ = new Queue(config.waitingCapacity)
@@ -26,7 +26,7 @@ class Bar extends BarObservable {
   }
 
   hireBartender() {
-    this.#bartender = new Bartender(this)
+    this.#bartender = new Bartender()
     return this
   }
 

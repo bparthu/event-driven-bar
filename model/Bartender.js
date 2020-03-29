@@ -1,8 +1,8 @@
 const BarObservable = require('./BarObservable')
 
 class Bartender extends BarObservable {
-  constructor(bar) {
-    super(bar)
+  constructor() {
+    super(true)
   }
 }
 

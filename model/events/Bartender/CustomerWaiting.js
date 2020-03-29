@@ -2,9 +2,8 @@ const _ = require('lodash')
 const Event = require('../base')
 
 class CustomerWaiting extends Event {
-  constructor(bar) {
-    super(bar)
-    this.bar = bar
+  constructor(bar, bartender) {
+    super(bar, bartender)
   }
 
   async run(target) {

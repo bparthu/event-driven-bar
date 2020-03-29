@@ -3,21 +3,19 @@ const path = require('path')
 const fs = require('fs')
 const _ = require('lodash')
 const CONSTANT = require('../constants')
+const eventBus = require('./EventBus')
 
 class BarObservable extends EventEmitter {
   #monitors = []
 
-  constructor(bar) {
+  constructor(registerInBus) {
     super()
-    if(bar)
-      this.bar = bar
+    if(registerInBus) {
+      eventBus.registerEmitter(this)
+    }
   }
 
   async registerEvents() {
-    let barCtx = this
-    if(this.bar) {
-      barCtx = this.bar
-    }
     const directoryPath = path.join(__dirname, CONSTANT.EVENTS_DIR, this.constructor.name)
     return await new Promise((resolve, reject) => {
       fs.readdir(directoryPath, (err, files) => {
@@ -27,7 +25,7 @@ class BarObservable extends EventEmitter {
         for(const file of files) {
           const EventName = path.parse(file).name
           let Class = require(path.join(directoryPath, EventName))
-          const event = new Class(barCtx)
+          const event = new Class(eventBus.emitters.bar, eventBus.emitters.bartender)
           this.on(_.kebabCase(EventName), async (target) => {
             await event.execute(this, target)
           })
