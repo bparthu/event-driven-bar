@@ -8,7 +8,7 @@ class CustomerWaiting extends Event {
 
   async run(target) {
     if(this.bar.seatCustomer(target)){
-      this.bar.removeCustomerFromWaitQ(target)
+      this.bar.emit('customer-seated', target)
       target.emit('seated', target)
       return
     }

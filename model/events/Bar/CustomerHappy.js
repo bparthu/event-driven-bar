@@ -1,13 +1,13 @@
 const Event = require('../base')
 
-class Seated extends Event {
+class CustomerHappy extends Event {
   constructor(bar, bartender) {
     super(bar, bartender)
   }
 
   async run(target) {
-    this.bartender.emit('serve-beer', target)
+    this.bar.incrementSuccessCount()
   }
 }
 
-module.exports = Seated
+module.exports = CustomerHappy
