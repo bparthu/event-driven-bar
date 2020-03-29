@@ -6,8 +6,9 @@ class OrderDrink extends Event {
     this.bar = bar
   }
 
-  run(target) {
-    
+  async run(target) {
+    // emits 'drink-served' on customer
+    target.emit('drink-served', target)
   }
 }
 

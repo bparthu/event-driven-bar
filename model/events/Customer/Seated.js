@@ -6,8 +6,17 @@ class Seated extends Event {
     this.bar = bar
   }
 
-  run(target) {
-    // produces 'order-drink' event on bartender
+  async run(target) {
+    /*
+      sets customer status to 'seated' 
+      clearTimeout wait timeout
+      produces 'order-drink' event on bartender
+    */
+
+    /*
+    this.bar.getBartender().emit('order-drink', target)
+    */
+
     this.bar.getBartender().emit('order-drink', target)
   }
 }

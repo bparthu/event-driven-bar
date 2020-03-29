@@ -7,8 +7,14 @@ class HandleCheck extends Event {
     this.bar = bar
   }
 
-  run(target) {
-    
+  async run(target) {
+    // produces 'exit-from-seat' event on bar
+    this.bar.removeCustomerFromSeating(target)
+    this.bar.incrementSuccessCount()
+    const customer = this.bar.getNextWaitingCustomer()
+    if(customer) {
+      this.bar.getBartender().emit('customer-waiting', customer)
+    }
   }
 }
 

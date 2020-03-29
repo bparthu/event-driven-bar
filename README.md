@@ -28,6 +28,18 @@ newCustomer (customer generator produces this event) ->
   adds the customer to waiting queue / increase the lost count for bar
   produces waitOnQueue on customer
 
+ExitFromSeat
+  removes customer from seat or from seating
+  increments success count
+  try to seat next person waiting on queue
+
+ExitFromWaitQ
+  removes customer from waitQ or from seating
+
+LoseCustomer
+  increments bar loss count 
+  removes customer from the waitQ
+
 bar tender events
 -----------------
   waitingOnQueue
@@ -36,7 +48,7 @@ bar tender events
       produces exit-from-waitq event on bar
       produces seated event on customer
     if unsuccessful
-      produces waitOnQueue on customer
+      do nothing
   orderDrinks
     produces drinkServed event on customer
   handleCheck
@@ -45,10 +57,13 @@ bar tender events
 customer events
 ---------------
 waitOnQueue (bar produces this event)
+  updates customer status to 'waiting'
+  sets up wait timeout
   produces waitingOnQueue on bar tender
 
 seated (bar tender produces this event)
-  pre determines number of drinks to drink
+  sets customer status to 'seated' 
+  clearTimeout wait timeout
   produces orderDrinks on bar tender
 drinkServed (bar tender produces this event)
   waits between 100 to 500 ms

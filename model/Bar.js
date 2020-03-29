@@ -1,11 +1,8 @@
-const fs = require('fs')
-const path = require('path')
 const Queue = require('./Queue')
-const _ = require('lodash')
-const constants = require('../constants')
-const EventEmitter = require('events')
+const BarObservable = require('./BarObservable')
+const Bartender = require('./Bartender')
 
-class Bar extends EventEmitter {
+class Bar extends BarObservable {
   #name
   #seating
   #waitQ
@@ -13,23 +10,24 @@ class Bar extends EventEmitter {
   #successCount
   #lossCount
 
-
-  constructor(name, bartender, seatingCapacity, waitingCapacity) {
+  constructor(name, config) {
     super()
     this.#name = name
-    this.#bartender = bartender
-    this.#seating = new Queue(seatingCapacity)
-    this.#waitQ = new Queue(waitingCapacity)
+    this.#seating = new Queue(config.seatingCapacity)
+    this.#waitQ = new Queue(config.waitingCapacity)
     this.#successCount = 0
     this.#lossCount = 0
   }
 
-  emit(eventName, ...params) {
-    super.emit(eventName, ...params)
+  async open(cb) {
+    await this.registerEvents()
+    await this.#bartender.registerEvents()
+    cb(this)
   }
 
-  open() {
-    console.log('bar opened')
+  hireBartender() {
+    this.#bartender = new Bartender(this)
+    return this
   }
 
   getBartender() {
@@ -37,11 +35,21 @@ class Bar extends EventEmitter {
   }
 
   waitCustomer(customer) {
-    return this.#waitQ.enqueue(customer)
+    const status = this.#waitQ.enqueue(customer)
+    this.postUpdates()
+    return status
   }
 
   seatCustomer(customer) {
-    return this.#seating.enqueue(customer)
+    const status = this.#seating.enqueue(customer)
+    this.postUpdates()
+    return status
+  }
+
+  getNextWaitingCustomer() {
+    let customer = this.#waitQ.dequeue()
+    this.postUpdates()
+    return customer
   }
 
   removeCustomerFromWaitQ(customer) {
@@ -49,6 +57,7 @@ class Bar extends EventEmitter {
     if(idx < 0)
       return false
     this.#waitQ.splice(idx,1)
+    this.postUpdates()
     return true
   }
 
@@ -57,11 +66,18 @@ class Bar extends EventEmitter {
     if(idx < 0)
       return false
     this.#seating.splice(idx,1)
+    this.postUpdates()
     return true
   }
 
   incrementLossCount() {
     this.#lossCount++
+    this.postUpdates()
+  }
+
+  incrementSuccessCount() {
+    this.#successCount++
+    this.postUpdates()
   }
 
   getSeatCount() {

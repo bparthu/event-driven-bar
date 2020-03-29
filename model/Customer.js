@@ -1,18 +1,59 @@
-const EventEmitter = require('events')
+const BarObservable = require('./BarObservable')
+const util = require('../util')
+const CONSTANTS = require('../constants')
 
-class Customer extends EventEmitter {
+class Customer extends BarObservable {
   #name
-  constructor(name) {
-    super()
+  #status
+  #waitThreshold
+  #waitTimeout
+  #numberOfDrinks
+  #currentDrink
+
+  constructor(name, bar) {
+    super(bar)
     this.#name = name
+    this.#waitThreshold = util.getRandomInt(CONSTANTS.CUSTOMER_WAIT_MIN_THRESHOLD, CONSTANTS.CUSTOMER_WAIT_MAX_THRESHOLD)
+    this.#numberOfDrinks = util.getRandomInt(CONSTANTS.CUSTOMER_DRINKS_MIN, CONSTANTS.CUSTOMER_DRINKS_MAX)
+    this.#currentDrink = 1
   }
 
   getName() {
     return this.#name
   }
 
-  emit(eventName, ...params) {
-    super.emit(eventName, ...params)
+  startWaiting(cb) {
+    if(!this.#waitTimeout) {
+      this.#waitTimeout = setTimeout(cb, this.#waitThreshold)
+    }
+  }
+
+  stopWaiting() {
+    clearTimeout(this.#waitTimeout)
+  }
+
+  setStatus(status) {
+    this.#status = status
+  }
+
+  getNumberOfDrinks() {
+    return this.#numberOfDrinks
+  }
+
+  drinkMore() {
+    if(this.#currentDrink < this.#numberOfDrinks) {
+      this.#currentDrink++
+      return true
+    }
+    return false
+  }
+
+  getStatus() {
+    return this.#status
+  }
+
+  getWaitThreshold() {
+    return this.#waitThreshold
   }
 }
 

@@ -6,7 +6,7 @@ class Event {
   }
 
   before(handler, target) {
-    //this.track(handler, target)
+    this.track(handler, target)
   }
 
   run(target) {
@@ -17,14 +17,14 @@ class Event {
 
   }
 
-  execute(handler, target) {
+  async execute(handler, target) {
     this.before(handler, target)
-    this.run(target)
+    await this.run(target)
     this.after(handler, target)
   }
 
   track(handler, target) {
-    console.log(`Event: ${handler.constructor.name} is handling ${this.getEventName()} for ${target.getName()}`)
+    //console.log(`Event: ${handler.constructor.name} is handling ${this.getEventName()} for ${target.getName()}`)
   }
 
   getEventName() {

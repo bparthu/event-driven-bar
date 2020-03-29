@@ -13,14 +13,15 @@ class WaitingOnQueue extends Event {
         produces 'exit-from-waitq' event on bar
         produces 'seated' event on consumer
       else
-        produces 'wait-on-queue' event on consumer
+        do nothing
     */
 
     if(!this.bar.seatCustomer(target)) {
-      target.emit('wait-on-queue', target)
+      // cannot seat customer
       return
     }
-    this.bar.emit('exit-from-waitq', target)
+    target.stopWaiting()
+    this.bar.removeCustomerFromWaitQ(target)
     target.emit('seated', target)
   }
 }

@@ -1,15 +1,8 @@
-const Queue = require('./Queue')
-const EventEmitter = require('events')
+const BarObservable = require('./BarObservable')
 
-class Bartender extends EventEmitter {
-  #requests
-  constructor(capacity) {
-    super()
-    this.#requests = new Queue(capacity)
-  }
-
-  emit(eventName, ...params) {
-    super.emit(eventName, ...params)
+class Bartender extends BarObservable {
+  constructor(bar) {
+    super(bar)
   }
 }
 
