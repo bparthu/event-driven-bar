@@ -8,7 +8,10 @@ class BeerServed extends Event {
   }
 
   async run(customer) {
-    await util.takeTime(CONSTANTS.CUSTOMER_DRINK_TIME_MIN, CONSTANTS.CUSTOMER_DRINK_TIME_MAX)
+    if(await customer.drinkBeer()) {
+      customer.emit('beer-served')
+      return
+    }
     this.bartender.emit('handle-check', customer)
   }
 }
