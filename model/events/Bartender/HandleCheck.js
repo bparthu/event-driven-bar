@@ -6,11 +6,11 @@ class HandleCheck extends Event {
     super(bar, bartender)
   }
 
-  async run(target) {
+  async run(customer) {
     // produces 'exit-from-seat' event on bar
-    this.bar.removeCustomerFromSeating(target)
-    this.bar.emit('customer-happy', target)
-    this.bar.emit('next-customer', target)
+    this.bar.removeCustomerFromSeating(customer)
+    this.bar.emit('customer-happy', customer)
+    this.bar.emit('next-customer', customer)
   }
 }
 

@@ -26,8 +26,8 @@ class BarObservable extends EventEmitter {
           const EventName = path.parse(file).name
           let Class = require(path.join(directoryPath, EventName))
           const event = new Class(eventBus.emitters.bar, eventBus.emitters.bartender)
-          this.on(_.kebabCase(EventName), async (target) => {
-            await event.execute(this, target)
+          this.on(_.kebabCase(EventName), async (customer) => {
+            await event.execute(this, customer)
           })
           resolve()
         }

@@ -5,8 +5,8 @@ class ServeBeer extends Event {
     super(bar, bartender)
   }
 
-  async run(target) {
-    target.emit('beer-served', target)
+  async run(customer) {
+    customer.emit('beer-served', customer)
   }
 }
 

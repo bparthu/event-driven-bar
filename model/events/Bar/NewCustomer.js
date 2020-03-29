@@ -5,12 +5,12 @@ class NewCustomer extends Event {
     super(bar, bartender)
   }
 
-  async run(target) {
-    if(this.bar.waitCustomer(target)){
-      this.bartender.emit('customer-waiting', target)
+  async run(customer) {
+    if(this.bar.waitCustomer(customer)){
+      this.bartender.emit('customer-waiting', customer)
       return
     }
-    this.bar.emit('customer-loss', target)
+    this.bar.emit('customer-loss', customer)
   }
 }
 

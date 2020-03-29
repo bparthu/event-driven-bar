@@ -5,8 +5,8 @@ class Seated extends Event {
     super(bar, bartender)
   }
 
-  async run(target) {
-    this.bartender.emit('serve-beer', target)
+  async run(customer) {
+    this.bartender.emit('serve-beer', customer)
   }
 }
 

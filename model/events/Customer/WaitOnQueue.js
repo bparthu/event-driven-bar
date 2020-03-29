@@ -6,26 +6,12 @@ class WaitOnQueue extends Event {
     super(bar, bartender)
   }
 
-  async run(target) {
-    /* 
-      sets customer status to 'waiting'
-      sets up wait timeout
-      emit 'waiting-on-queue' event on bartender
-    */
-
-    if(this.bar.waitCustomer(target)){
-      this.bartender.emit('customer-waiting', target)
+  async run(customer) {
+    if(this.bar.waitCustomer(customer)){
+      this.bartender.emit('customer-waiting', customer)
       return
     }
     this.bar.incrementLossCount()
-
-    /*
-    target.setStatus(CONSTANTS.CUSTOMER_STATUS_WAITING)
-    target.startWaiting(() => {
-      this.bar.emit('lose-customer', target)
-    })
-    this.bar.getBartender().emit('waiting-on-queue', target)
-    */
   }
 }
 

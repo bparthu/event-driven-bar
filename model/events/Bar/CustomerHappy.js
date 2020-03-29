@@ -5,7 +5,7 @@ class CustomerHappy extends Event {
     super(bar, bartender)
   }
 
-  async run(target) {
+  async run(customer) {
     this.bar.incrementSuccessCount()
   }
 }

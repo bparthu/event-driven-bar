@@ -7,9 +7,9 @@ class BeerServed extends Event {
     super(bar, bartender)
   }
 
-  async run(target) {
+  async run(customer) {
     await util.takeTime(CONSTANTS.CUSTOMER_DRINK_TIME_MIN, CONSTANTS.CUSTOMER_DRINK_TIME_MAX)
-    this.bartender.emit('handle-check', target)
+    this.bartender.emit('handle-check', customer)
   }
 }
 

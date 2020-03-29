@@ -7,11 +7,11 @@ class Event {
     this.bartender = bartender
   }
 
-  before(handler, target) {
-    this.track(handler, target)
+  before(handler, customer) {
+    this.track(handler, customer)
   }
 
-  run(target) {
+  run(customer) {
 
   }
 
@@ -19,14 +19,14 @@ class Event {
 
   }
 
-  async execute(handler, target) {
-    this.before(handler, target)
-    await this.run(target)
-    this.after(handler, target)
+  async execute(handler, customer) {
+    this.before(handler, customer)
+    await this.run(customer)
+    this.after(handler, customer)
   }
 
-  track(handler, target) {
-    console.log(`Event: ${handler.constructor.name} is handling ${this.getEventName()} for ${target.getName()}`)
+  track(handler, customer) {
+    console.log(`Event: ${handler.constructor.name} is handling ${this.getEventName()} for ${customer.getName()}`)
   }
 
   getEventName() {

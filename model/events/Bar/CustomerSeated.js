@@ -5,8 +5,8 @@ class CustomerSeated extends Event {
     super(bar, bartender)
   }
 
-  async run(target) {
-    this.bar.removeCustomerFromWaitQ(target)
+  async run(customer) {
+    this.bar.removeCustomerFromWaitQ(customer)
   }
 }
 
