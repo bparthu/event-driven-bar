@@ -9,7 +9,7 @@ class CustomerWaiting extends Event {
   async run(ctx, customer) {
     if(this.bar.seatCustomer(customer)){
       this.bar.emit('customer-seated', customer)
-      customer.emit('seated')
+      customer.emit('beer-served')
       return
     }
   }
