@@ -5,7 +5,7 @@ class NextCustomer extends Event {
     super(bar, bartender)
   }
 
-  async run(customer) {
+  async run(ctx, customer) {
     const nextCustomer = this.bar.getNextWaitingCustomer()
     if(nextCustomer) {
       this.bartender.emit('customer-waiting', nextCustomer)

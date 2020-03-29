@@ -5,7 +5,7 @@ class CustomerLoss extends Event {
     super(bar, bartender)
   }
 
-  async run(customer) {
+  async run(ctx, customer) {
     this.bar.incrementLossCount()
   }
 }

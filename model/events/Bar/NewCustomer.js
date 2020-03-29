@@ -5,7 +5,7 @@ class NewCustomer extends Event {
     super(bar, bartender)
   }
 
-  async run(customer) {
+  async run(ctx, customer) {
     if(this.bar.waitCustomer(customer)){
       this.bartender.emit('customer-waiting', customer)
       return

@@ -5,7 +5,7 @@ class ServeBeer extends Event {
     super(bar, bartender)
   }
 
-  async run(customer) {
+  async run(ctx, customer) {
     customer.emit('beer-served', customer)
   }
 }
