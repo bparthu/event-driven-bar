@@ -12,7 +12,7 @@ class HandleCheck extends Event {
     this.bar.incrementSuccessCount()
     const customer = this.bar.getNextWaitingCustomer()
     if(customer) {
-      this.bar.getBartender().emit('customer-waiting', customer)
+      this.bartender.emit('customer-waiting', customer)
     }
   }
 }

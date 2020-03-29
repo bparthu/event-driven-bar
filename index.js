@@ -15,7 +15,7 @@ BarManager
   })
   .hireBartender()
   .open(async (bar) => {
-    for(let i=0; i<2; i++) {
+    for(let i=0; i<1000; i++) {
       const customer = new Customer(`${faker.name.firstName()} ${faker.name.lastName()}`)
       await customer.registerEvents()
       bar.emit('new-customer', customer)

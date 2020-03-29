@@ -14,7 +14,7 @@ class WaitOnQueue extends Event {
     */
 
     if(this.bar.waitCustomer(target)){
-      this.bar.getBartender().emit('customer-waiting', target)
+      this.bartender.emit('customer-waiting', target)
       return
     }
     this.bar.incrementLossCount()

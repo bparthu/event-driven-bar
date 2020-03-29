@@ -16,7 +16,7 @@ class Seated extends Event {
     this.bar.getBartender().emit('order-drink', target)
     */
 
-    this.bar.getBartender().emit('order-drink', target)
+    this.bartender.emit('order-drink', target)
   }
 }
 
