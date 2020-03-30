@@ -6,7 +6,7 @@ const CONSTANT = require('../constants')
 const eventBus = require('./EventBus')
 
 class BarObservable extends EventEmitter {
-  #monitors = []
+  #observers = []
 
   constructor(registerInBus) {
     super()
@@ -35,14 +35,19 @@ class BarObservable extends EventEmitter {
     })
   }
 
-  addMonitor(monitor) {
-    this.#monitors.push(monitor)
+  addObserver(observer) {
+    this.#observers.push(observer)
+    return this
   }
 
-  postUpdates() {
-    this.#monitors.forEach((monitor) => {
-      monitor.track(this)
-    })
+  getStats() {
+
+  }
+
+  notifyAll() {
+    for(const observer of this.#observers) {
+      observer.emit('stat-update', this)
+    }
   }
 
   beforeEmit(eventName, ...params) {

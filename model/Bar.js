@@ -1,6 +1,7 @@
 const Queue = require('./Queue')
 const BarObservable = require('./BarObservable')
 const Bartender = require('./Bartender')
+const util = require('../util')
 
 class Bar extends BarObservable {
   #name
@@ -9,6 +10,8 @@ class Bar extends BarObservable {
   #bartender
   #successCount
   #lossCount
+  #isOpen=false
+  #figlet
 
   constructor(name, config) {
     super(true)
@@ -19,14 +22,39 @@ class Bar extends BarObservable {
     this.#lossCount = 0
   }
 
-  async open(cb) {
+  async openBar(cb) {
+    this.#figlet = await util.figlet(this.getName())
     await this.registerEvents()
     await this.#bartender.registerEvents()
+    this.#isOpen = true
     cb(this)
+  }
+
+  getFiglet() {
+    return this.#figlet
+  }
+
+  closeBar() {
+    this.#isOpen = false
+  }
+
+  isOpen() {
+    return this.#isOpen
+  }
+
+  getName() {
+    return this.#name
   }
 
   hireBartender() {
     this.#bartender = new Bartender()
+    return this
+  }
+
+  closeAfter(delay) {
+    setTimeout(() => {
+      this.closeBar()
+    }, delay)
     return this
   }
 
@@ -36,19 +64,16 @@ class Bar extends BarObservable {
 
   waitCustomer(customer) {
     const status = this.#waitQ.enqueue(customer)
-    this.postUpdates()
     return status
   }
 
   seatCustomer(customer) {
     const status = this.#seating.enqueue(customer)
-    this.postUpdates()
     return status
   }
 
   getNextWaitingCustomer() {
     let customer = this.#waitQ.dequeue()
-    this.postUpdates()
     return customer
   }
 
@@ -57,7 +82,6 @@ class Bar extends BarObservable {
     if(idx < 0)
       return false
     this.#waitQ.splice(idx,1)
-    this.postUpdates()
     return true
   }
 
@@ -66,18 +90,31 @@ class Bar extends BarObservable {
     if(idx < 0)
       return false
     this.#seating.splice(idx,1)
-    this.postUpdates()
     return true
   }
 
   incrementLossCount() {
     this.#lossCount++
-    this.postUpdates()
   }
 
   incrementSuccessCount() {
     this.#successCount++
-    this.postUpdates()
+  }
+
+  getConfig() {
+    return {
+      waitingQCapacity: this.#waitQ.getLength(),
+      seatingCapacity: this.#seating.getLength()
+    }
+  }
+
+  getStats() {
+    return {
+      waitCount: this.getWaitCount(),
+      seatCount: this.getSeatCount(),
+      successCount: this.getSuccessCount(),
+      lossCount: this.getLossCount()
+    }
   }
 
   getSeatCount() {
