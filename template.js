@@ -12,10 +12,12 @@ let template = (bar, waitingCapacity, seatingCapacity) => {
             | waitingQ capacity : ${waitingCapacity}  |
             | seating capacity  : ${seatingCapacity}  |
             |_________________________|
-  
+            
             newCustomer --> waiting(${stats.waitCount}) --> seating(${stats.seatCount}) --> success(${stats.successCount})
                 |
                 --> loss(${stats.lossCount})
+
+            total customer arrived at the bar : ${bar.getTotalCount()}
   ` 
 }
 

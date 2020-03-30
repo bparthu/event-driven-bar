@@ -6,8 +6,11 @@ class NewCustomer extends Event {
   }
 
   async run(ctx, customer) {
-    this.bar.incrementTotalCount()
-    this.bar.emit('customer-wait', customer)
+    if(this.bar.waitCustomer(customer)){
+      this.bartender.emit('customer-waiting', customer)
+      return
+    }
+    this.bar.emit('customer-loss', customer)
   }
 }
 

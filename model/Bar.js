@@ -12,6 +12,7 @@ class Bar extends BarObservable {
   #lossCount
   #isOpen=false
   #figlet
+  #totalCount
 
   constructor(name, config) {
     super(true)
@@ -20,6 +21,7 @@ class Bar extends BarObservable {
     this.#waitQ = new Queue(config.waitingCapacity)
     this.#successCount = 0
     this.#lossCount = 0
+    this.#totalCount = 0
   }
 
   async openBar(cb) {
@@ -99,6 +101,14 @@ class Bar extends BarObservable {
 
   incrementSuccessCount() {
     this.#successCount++
+  }
+
+  incrementTotalCount() {
+    this.#totalCount++
+  }
+
+  getTotalCount() {
+    return this.#totalCount
   }
 
   getConfig() {

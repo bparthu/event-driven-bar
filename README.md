@@ -88,3 +88,10 @@ Bartender
 ---------
 listens: ['waiting-on-queue', 'order-drinks', 'handle-check']
 produces: [{ctx: Customer, events: ['wait-on-queue', 'seated', 'drink-served']}]
+
+track total number of customers served
+implement eventcollector 
+track total number of beers served
+add price for beer
+track total revenue
+bar open since time lot

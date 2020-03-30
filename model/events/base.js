@@ -11,7 +11,7 @@ class Event {
     this.track(handler, customer)
   }
 
-  run(handler, customer) {
+  async run(handler, customer) {
 
   }
 
