@@ -1,6 +1,6 @@
 const Event = require('../base')
 
-class NewCustomer extends Event {
+class CustomerWait extends Event {
   constructor(bar, bartender) {
     super(bar, bartender)
   }
@@ -14,4 +14,4 @@ class NewCustomer extends Event {
   }
 }
 
-module.exports = NewCustomer
+module.exports = CustomerWait
