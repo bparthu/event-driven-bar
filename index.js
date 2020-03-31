@@ -9,8 +9,12 @@ const Customer = require('./model/Customer')
 const CONSTANTS = require('./constants')
 const util = require('./util')
 const template = require('./template')
-const BarObserver = require('./Observer/BarObserver')
-const observer = new BarObserver()
+
+const Observer = require('./Observer/Observer')
+const observer = new Observer()
+
+const EventCollector = require('./Observer/EventCollector')
+const eventCollector = new EventCollector(observer)
 
 const test = {
   generator: async function*(bar) {
@@ -27,32 +31,43 @@ BarManager
     waitingCapacity: CONSTANTS.WAITING_CAPACITY
   })
   .addObserver(observer)
-  .closeAfter(CONSTANTS.BAR_TIME)
+  .closeAfter(CONSTANTS.BAR_TIME, CONSTANTS.PER_HOUR_IN_MS)
   .openBar(async (bar) => {
-
-    
     for await(const customer of test.generator(bar)) {
       await customer.registerEvents()
+      customer.addObserver(observer)
       bar.emit('new-customer', customer)
     }
-    
-    
 
     /*
-    for(let i=0; i<2; i++) {
+    for(let i=0; i<1; i++) {
       await util.takeTime(util.getRandomInt(CONSTANTS.CUSTOMER_ARRIVAL_TIME_MIN, CONSTANTS.CUSTOMER_ARRIVAL_TIME_MAX))
       const customer = new Customer(`${faker.name.firstName()} ${faker.name.lastName()}`) 
       await customer.registerEvents()
+      customer.addObserver(observer)
       bar.emit('new-customer', customer)
     }
     */
     
     
+    
 
   })
 
+  eventCollector.startListeners()
+
+  /*
+  eventCollector.on('notification', (event) => {
+    logUpdate(`
+    ${JSON.stringify(event)}
+    `)
+  })
+  */
+
   
-  observer.on('stat-update', (bar) => {
-    logUpdate(template(bar, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY))
+  eventCollector.on('notification', (event) => {
+    const bar = event.handlers.Bar
+    if(event.handlers.Bar)
+      logUpdate(template(event.handlers.Bar, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY, CONSTANTS.BAR_TIME))
   })
   

@@ -22,6 +22,12 @@ class Customer extends BarObservable {
     return this.#numberOfDrinks
   }
 
+  getStats() {
+    return {
+      currentDrink: this.#currentDrink
+    }
+  }
+
   async drinkBeer() {
     await util.takeTime(util.getRandomInt(CONSTANTS.CUSTOMER_DRINK_TIME_MIN, CONSTANTS.CUSTOMER_DRINK_TIME_MAX))
     if(this.#currentDrink < this.#numberOfDrinks) {

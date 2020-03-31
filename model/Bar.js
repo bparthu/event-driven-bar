@@ -12,6 +12,7 @@ class Bar extends BarObservable {
   #figlet
   #totalCount
   #BeerSoldCount
+  #openSince
 
   constructor(name, config) {
     super(true)
@@ -22,6 +23,7 @@ class Bar extends BarObservable {
     this.#lossCount = 0
     this.#totalCount = 0
     this.#BeerSoldCount = 0
+    this.#openSince = 0
   }
 
   async openBar(cb) {
@@ -47,16 +49,26 @@ class Bar extends BarObservable {
     return this.#name
   }
 
-  closeAfter(delay) {
+  closeAfter(delay, perHourMs) {
     setTimeout(() => {
       this.closeBar()
-    }, delay)
+    }, delay * perHourMs)
+
+    this.interval = setInterval(() => {
+      this.#openSince++
+      if(!this.isOpen())
+        clearInterval(this.interval)
+    }, perHourMs)
     return this
   }
 
   waitCustomer(customer) {
     const status = this.#waitQ.enqueue(customer)
     return status
+  }
+
+  openSince() {
+    return this.#openSince
   }
 
   seatCustomer(customer) {
@@ -125,6 +137,7 @@ class Bar extends BarObservable {
 
   getStats() {
     return {
+      totalCount: this.getTotalCount(),
       waitCount: this.getWaitCount(),
       seatCount: this.getSeatCount(),
       successCount: this.getSuccessCount(),

@@ -46,7 +46,7 @@ class BarObservable extends EventEmitter {
 
   notifyAll() {
     for(const observer of this.#observers) {
-      observer.emit('stat-update', this)
+      observer.emit('stats-update', this)
     }
   }
 

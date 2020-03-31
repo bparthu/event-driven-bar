@@ -1,6 +1,6 @@
 const EventEmitter = require('events')
 
-class BarObserver extends EventEmitter {
+class Observer extends EventEmitter {
   constructor() {
     super()
   }
@@ -10,4 +10,4 @@ class BarObserver extends EventEmitter {
   }
 }
 
-module.exports = BarObserver
+module.exports = Observer

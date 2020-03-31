@@ -15,7 +15,7 @@ class Event {
   }
 
   after(handler, customer) {
-    this.bar.notifyAll()
+    handler.notifyAll()
   }
 
   async execute(handler, customer) {
