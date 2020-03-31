@@ -1,18 +1,17 @@
 const Queue = require('./Queue')
 const BarObservable = require('./BarObservable')
-const Bartender = require('./Bartender')
 const util = require('../util')
 
 class Bar extends BarObservable {
   #name
   #seating
   #waitQ
-  #bartender
   #successCount
   #lossCount
   #isOpen=false
   #figlet
   #totalCount
+  #BeerSoldCount
 
   constructor(name, config) {
     super(true)
@@ -22,12 +21,12 @@ class Bar extends BarObservable {
     this.#successCount = 0
     this.#lossCount = 0
     this.#totalCount = 0
+    this.#BeerSoldCount = 0
   }
 
   async openBar(cb) {
     this.#figlet = await util.figlet(this.getName())
     await this.registerEvents()
-    await this.#bartender.registerEvents()
     this.#isOpen = true
     cb(this)
   }
@@ -48,20 +47,11 @@ class Bar extends BarObservable {
     return this.#name
   }
 
-  hireBartender() {
-    this.#bartender = new Bartender()
-    return this
-  }
-
   closeAfter(delay) {
     setTimeout(() => {
       this.closeBar()
     }, delay)
     return this
-  }
-
-  getBartender() {
-    return this.#bartender
   }
 
   waitCustomer(customer) {
@@ -70,8 +60,18 @@ class Bar extends BarObservable {
   }
 
   seatCustomer(customer) {
-    const status = this.#seating.enqueue(customer)
-    return status
+    /*
+      seating customer means
+        try adding customer to the seat
+          if successful
+            remove customer from waitQ
+          else
+            do nothing
+    */
+    const isSeated = this.#seating.enqueue(customer)
+    if(isSeated)
+      this.removeCustomerFromWaitQ(customer)
+    return isSeated
   }
 
   getNextWaitingCustomer() {
@@ -92,6 +92,11 @@ class Bar extends BarObservable {
     if(idx < 0)
       return false
     this.#seating.splice(idx,1)
+    return true
+  }
+
+  orderBeer() {
+    this.#BeerSoldCount++
     return true
   }
 

@@ -2,9 +2,8 @@ const _ = require('lodash')
 const eventBus = require('../EventBus')
 
 class Event {
-  constructor(bar, bartender, observers) {
+  constructor(bar) {
     this.bar = bar
-    this.bartender = bartender
   }
 
   before(handler, customer) {
@@ -15,7 +14,7 @@ class Event {
 
   }
 
-  after() {
+  after(handler, customer) {
     this.bar.notifyAll()
   }
 
@@ -25,10 +24,14 @@ class Event {
     this.after(handler, customer)
   }
 
+  getDescription(handler, customer) {
+    console.log(`customer name: ${customer.getName()} - ${handler.constructor.name} - ${this.getEventName()}`)
+  }
+
   track(handler, customer) {
     if(!customer)
       customer = handler
-    //console.log(`Event: ${handler.constructor.name} is handling ${this.getEventName()} for ${customer.getName()}`)
+    //this.getDescription(handler, customer)
   }
 
   getEventName() {

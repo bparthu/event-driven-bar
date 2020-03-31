@@ -1,4 +1,4 @@
-# event-driven-bar
+# Building observable, testable, even driven Beer bar powered by NodeJS
 
 1. bdd
 2. jsdoc for comments
@@ -89,6 +89,8 @@ Bartender
 listens: ['waiting-on-queue', 'order-drinks', 'handle-check']
 produces: [{ctx: Customer, events: ['wait-on-queue', 'seated', 'drink-served']}]
 
+lets assume there is no bartender, add a bartender and seating later
+make bar singleton bar.getInstance
 track total number of customers served
 implement eventcollector 
 track total number of beers served

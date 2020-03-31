@@ -2,8 +2,12 @@ const _ = require('lodash')
 const Event = require('../base')
 
 class HandleCheck extends Event {
-  constructor(bar, bartender) {
-    super(bar, bartender)
+  constructor(bar) {
+    super(bar)
+  }
+
+  getDescription(handler, customer) {
+    console.log(`'${customer.getName()}' wants to pay the bill`)
   }
 
   async run(ctx, customer) {

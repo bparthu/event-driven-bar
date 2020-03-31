@@ -26,26 +26,33 @@ BarManager
     seatingCapacity: CONSTANTS.SEATING_CAPACITY,
     waitingCapacity: CONSTANTS.WAITING_CAPACITY
   })
-  .hireBartender()
   .addObserver(observer)
   .closeAfter(CONSTANTS.BAR_TIME)
   .openBar(async (bar) => {
+
+    
     for await(const customer of test.generator(bar)) {
       await customer.registerEvents()
       bar.emit('new-customer', customer)
     }
+    
+    
 
     /*
-    for(let i=0; i<10; i++) {
+    for(let i=0; i<2; i++) {
       await util.takeTime(util.getRandomInt(CONSTANTS.CUSTOMER_ARRIVAL_TIME_MIN, CONSTANTS.CUSTOMER_ARRIVAL_TIME_MAX))
       const customer = new Customer(`${faker.name.firstName()} ${faker.name.lastName()}`) 
       await customer.registerEvents()
       bar.emit('new-customer', customer)
     }
     */
+    
+    
 
   })
 
+  
   observer.on('stat-update', (bar) => {
     logUpdate(template(bar, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY))
   })
+  

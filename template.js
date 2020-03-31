@@ -18,6 +18,9 @@ let template = (bar, waitingCapacity, seatingCapacity) => {
                 --> loss(${stats.lossCount})
 
             total customer arrived at the bar : ${bar.getTotalCount()}
+
+  Hand crafted with ❤️ by Beer and NodeJS enthusiasist
+  https://github.com/bparthu/event-driven-bar
   ` 
 }
 
