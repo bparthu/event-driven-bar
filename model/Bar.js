@@ -112,6 +112,10 @@ class Bar extends BarObservable {
     return true
   }
 
+  getNumberOfBeersSold() {
+    return this.#BeerSoldCount
+  }
+
   incrementLossCount() {
     this.#lossCount++
   }

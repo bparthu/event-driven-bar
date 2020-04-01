@@ -13,11 +13,12 @@ let template = (bar, waitingCapacity, seatingCapacity, openFor) => {
   | Open for          : ${openFor} hrs |
   |____________________________|
 
-  newCustomer --> waiting(${stats.waitCount}) --> seating(${stats.seatCount}) --> success(${stats.successCount})
+  Total 🍺 served         : ${bar.getNumberOfBeersSold()}
+  Average 🍺 per customer : ${((stats.successCount === 0) ? 0 : bar.getNumberOfBeersSold() / stats.successCount).toFixed(2)}
+
+  newCustomer(${bar.getTotalCount()}) --> waiting(${stats.waitCount}) --> seating(${stats.seatCount}) --> success(${stats.successCount})
       |
       --> loss(${stats.lossCount})
-
-  total customers arrived at the bar : ${bar.getTotalCount()}
 
   Hand crafted with ❤️ by Beer and NodeJS enthusiasist
   https://github.com/bparthu/event-driven-bar
