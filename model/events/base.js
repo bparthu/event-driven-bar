@@ -7,6 +7,7 @@ class Event {
   }
 
   before(handler, customer) {
+    handler.notifyEvents(this.getEventName())
     this.track(handler, customer)
   }
 
@@ -15,7 +16,7 @@ class Event {
   }
 
   after(handler, customer) {
-    handler.notifyAll()
+    handler.notifyStatUpdates()
   }
 
   async execute(handler, customer) {

@@ -1,4 +1,4 @@
-const Queue = require('./Queue')
+const Queue = require('./BlockingQ')
 const BarObservable = require('./BarObservable')
 const util = require('../util')
 

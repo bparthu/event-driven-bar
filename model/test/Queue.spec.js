@@ -1,7 +1,7 @@
 const chai = require('chai')
 const should = chai.should()
 
-const Queue = require('../Queue')
+const Queue = require('../BlockingQ')
 
 describe('Queue', () => {
 
