@@ -15,7 +15,7 @@ class Bar extends BarObservable {
   #openSince
 
   constructor(name, config) {
-    super(true)
+    super()
     this.#name = name
     this.#seating = new Queue(config.seatingCapacity)
     this.#waitQ = new Queue(config.waitingCapacity)

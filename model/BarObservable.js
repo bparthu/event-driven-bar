@@ -9,11 +9,8 @@ class BarObservable extends EventEmitter {
   #observers = []
   #currentEvent = null
 
-  constructor(registerInBus) {
+  constructor() {
     super()
-    if(registerInBus) {
-      eventBus.registerEmitter(this)
-    }
   }
 
   async registerEvents() {
@@ -26,7 +23,11 @@ class BarObservable extends EventEmitter {
         for(const file of files) {
           const EventName = path.parse(file).name
           let Class = require(path.join(directoryPath, EventName))
-          const event = new Class(eventBus.emitters.bar)
+          let bar = this.bar
+          if(!bar){
+            bar = this
+          }
+          const event = new Class(bar)
           this.on(_.kebabCase(EventName), async (customer) => {
             await event.execute(this, customer)
           })

@@ -18,7 +18,7 @@ const Patron = {
   generator: async function*(bar) {
     while(bar.isOpen()) {
       await util.takeTime(util.getRandomInt(CONSTANTS.CUSTOMER_ARRIVAL_TIME_MIN, CONSTANTS.CUSTOMER_ARRIVAL_TIME_MAX))
-      yield new Customer(`${faker.name.firstName()} ${faker.name.lastName()}`) 
+      yield new Customer(`${faker.name.firstName()} ${faker.name.lastName()}`, bar) 
     }
   }
 }
