@@ -67,5 +67,6 @@ BarManager
   
   eventCollector.on('notification', (event) => {
     logUpdate(template(event, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY, CONSTANTS.BAR_TIME))
+    //template(event, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY, CONSTANTS.BAR_TIME)
   })
   

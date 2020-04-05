@@ -1,20 +1,25 @@
-const PartialView = require('./PartialView')
+const getNeonSign = (bar) => {
+  return bar.getNeonSign()
+}
 
-let template = (event, waitingCapacity, seatingCapacity, openFor) => {
-  const bar = event.handlers.Bar
-  if(!bar)
-    return
+const getBarStatus = (bar, openFor) => {
+  return `Bar status : ${bar.isOpen() ? `🍺 open (${openFor - bar.openSince()}) 🍺` : 'closed'}`
+}
 
-  return `${PartialView.getNeonSign(bar)}
-  ${PartialView.getBarStatus(bar, openFor)}
-  ${PartialView.getBarConfig(waitingCapacity, seatingCapacity, openFor)}
-  ${PartialView.getCustomerStats(bar)}
-  ${PartialView.getBarStats(bar)}
+const getBarConfig = (waitingCapacity, seatingCapacity, openFor) => {
+  return ` 
+   -------------------------
+  |  * bar configuration  * |
+   ____________________________
+  |                            |
+  | waitingQ capacity : ${waitingCapacity}     |
+  | seating capacity  : ${seatingCapacity}     |
+  | Open for          : ${openFor} hrs |
+  |____________________________|
   `
+}
 
-  /*
-  const stats = bar.getStats()
-
+const getCustomerStats = (bar) => {
   // seated customers
   const customer0 = bar.getSeatedCustomer(0)
   const customer1 = bar.getSeatedCustomer(1)
@@ -27,19 +32,10 @@ let template = (event, waitingCapacity, seatingCapacity, openFor) => {
   const customer8 = bar.getSeatedCustomer(8)
   const customer9 = bar.getSeatedCustomer(9)
 
-  return `${bar.getNeonSign()}
-  Bar status : ${bar.isOpen() ? `🍺 open (${openFor - bar.openSince()}) 🍺` : 'closed'}
+  const stats = bar.getStats()
 
-   -------------------------
-  |  * bar configuration  * |
-   ____________________________
-  |                            |
-  | waitingQ capacity : ${waitingCapacity}     |
-  | seating capacity  : ${seatingCapacity}     |
-  | Open for          : ${openFor} hrs |
-  |____________________________|
-
-   customers being served (Total 🍺 served: ${bar.getNumberOfBeersSold()}, Average 🍺 per customer : ${((stats.successCount === 0) ? 0 : bar.getNumberOfBeersSold() / stats.successCount).toFixed(2)})
+  return `
+  customers being served (Total 🍺 served: ${bar.getNumberOfBeersSold()}, Average 🍺 per customer : ${((stats.successCount === 0) ? 0 : bar.getNumberOfBeersSold() / stats.successCount).toFixed(2)})
    ---------------------------
     ${customer0 ? `${customer0.getName()} (beers ordered: ${customer0.getCurrentDrinks()}, event: ${customer0.getCurrentEvent()})` : 'Empty'}
     ${customer1 ? `${customer1.getName()} (beers ordered: ${customer1.getCurrentDrinks()}, event: ${customer1.getCurrentEvent()})` : 'Empty'}
@@ -52,12 +48,22 @@ let template = (event, waitingCapacity, seatingCapacity, openFor) => {
     ${customer8 ? `${customer8.getName()} (beers ordered: ${customer8.getCurrentDrinks()}, event: ${customer8.getCurrentEvent()})` : 'Empty'}
     ${customer9 ? `${customer9.getName()} (beers ordered: ${customer9.getCurrentDrinks()}, event: ${customer9.getCurrentEvent()})` : 'Empty'}
    ------------------------------
+  `
+}
 
+const getBarStats = (bar) => {
+  const stats = bar.getStats()
+  return `
   newCustomer(${bar.getTotalCount()}) --> waiting(${stats.waitCount}) --> seating(${stats.seatCount}) --> success(${stats.successCount})
       |
       --> loss(${stats.lossCount})
-  ` 
-  */
+  `
 }
 
-module.exports = template
+module.exports = {
+  getNeonSign,
+  getBarStatus,
+  getBarConfig,
+  getCustomerStats,
+  getBarStats
+}
