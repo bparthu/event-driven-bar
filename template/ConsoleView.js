@@ -27,16 +27,16 @@ class ConsoleView {
   | waitingQ capacity : ${this.#waitingCapacity}     |
   | seating capacity  : ${this.#seatingCapacity}     |
   | Open for          : ${this.#openFor} hrs |
-  |____________________________|
-  `
+  |____________________________|`
   }
 
   getCustomerStats() {
     const stats = this.#bar.getStats()
 
     let result = `
-    | customers being served (Total 🍺 served: ${this.#bar.getNumberOfBeersSold()}, Average 🍺 per customer : ${((stats.successCount === 0) ? 0 : this.#bar.getNumberOfBeersSold() / stats.successCount).toFixed(2)}) |
-    ---------------------------------------------------------------------------------
+   -------------------------------------------------------------------------------
+  | customers being served (Total 🍺 served: ${this.#bar.getNumberOfBeersSold()}, Average 🍺 per customer : ${((stats.successCount === 0) ? 0 : this.#bar.getNumberOfBeersSold() / stats.successCount).toFixed(2)}) |
+   -------------------------------------------------------------------------------
     `
     if(this.#bar.getSeatCount() > 0) {
       for(const customer of this.#bar.getSeatedCustomers()) {
@@ -45,21 +45,20 @@ class ConsoleView {
     } else {
       result = `${result}\n     Not serving any customers`
     }
-    result = `${result}\n    |-----------------------------------------------------------------------------|`
+    result = `${result}\n   ----------------------------------------------------------------------------- `
     return result
   }
 
   getBarStats() {
     const stats = this.#bar.getStats()
     return `
-    |--------------|----------------------------------------------------------------|
-    |  Bar  Stats  |  Bar events : ${this.#bar.getCurrentEvent()}
-    |--------------|----------------------------------------------------------------|
+   ------------------------------------------------------------------------------- 
+  |  Bar  Stats  |  Bar events : ${this.#bar.getCurrentEvent()}
+   ------------------------------------------------------------------------------- 
 
-      newCustomer(${this.#bar.getTotalCount()}) --> waiting(${stats.waitCount}) --> seating(${stats.seatCount}) --> success(${stats.successCount})
-          |
-          --> loss(${stats.lossCount})
-    |-------------------------------------------------------------------------------|`
+    newCustomer(${this.#bar.getTotalCount()}) --> waiting(${stats.waitCount}) --> seating(${stats.seatCount}) --> success(${stats.successCount})
+        |
+        --> loss(${stats.lossCount})`
   }
 
   buildView() {
