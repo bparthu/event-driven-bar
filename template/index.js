@@ -1,10 +1,10 @@
-const PartialView = require('./PartialView')
+const ConsoleView = require('./ConsoleView')
 
 let template = (event, waitingCapacity, seatingCapacity, openFor) => {
   const bar = event.handlers.Bar
   if(!bar)
     return
-  const consoleView = new PartialView(bar, waitingCapacity, seatingCapacity, openFor)
+  const consoleView = new ConsoleView(bar, waitingCapacity, seatingCapacity, openFor)
   return consoleView.buildView()
 }
 
