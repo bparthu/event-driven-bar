@@ -23,11 +23,7 @@ class BarObservable extends EventEmitter {
         for(const file of files) {
           const EventName = path.parse(file).name
           let Class = require(path.join(directoryPath, EventName))
-          let bar = this.bar
-          if(!bar){
-            bar = this
-          }
-          const event = new Class(bar)
+          const event = new Class()
           this.on(_.kebabCase(EventName), async (customer) => {
             await event.execute(this, customer)
           })
@@ -53,9 +49,9 @@ class BarObservable extends EventEmitter {
     return this.#currentEvent
   }
 
-  notifyStatUpdates(bar) {
+  notifyStatUpdates(ctx) {
     for(const observer of this.#observers) {
-      observer.emit('stats-update', bar)
+      observer.emit('stats-update', ctx)
     }
   }
 

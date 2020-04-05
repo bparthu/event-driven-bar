@@ -28,6 +28,14 @@ class Customer extends BarObservable {
     return this.#currentDrink
   }
 
+  getBar() {
+    return this.bar
+  }
+
+  orderBeer() {
+    return this.bar.orderBeer()
+  }
+
   getStats() {
     return {
       currentDrink: this.getCurrentDrinks()

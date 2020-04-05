@@ -41,7 +41,7 @@ BarManager
   // start external event listeners
   eventCollector.startListeners()
   // notification event is trigger anytime an event happens within the bar
-  eventCollector.on('notification', (bar) => {
-    logUpdate(template(bar, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY, CONSTANTS.BAR_TIME))
+  eventCollector.on('notification', (ctx) => {
+    logUpdate(template(ctx, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY, CONSTANTS.BAR_TIME))
   })
   

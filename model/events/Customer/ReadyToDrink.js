@@ -3,8 +3,8 @@ const CONSTANTS = require('../../../constants')
 const util = require('../../../util')
 
 class ReadyToDrink extends Event {
-  constructor(bar) {
-    super(bar)
+  constructor() {
+    super()
   }
 
   getDescription(handler, customer) {
@@ -12,12 +12,12 @@ class ReadyToDrink extends Event {
   }
 
   async run(customer) {
-    const isBeerServed = this.bar.orderBeer()
+    const isBeerServed = customer.orderBeer()
     if(isBeerServed) {
       customer.emit('drink-beer')
       return
     }
-    this.bar.emit('handle-check', customer) 
+    customer.getBar().emit('handle-check', customer) 
   }
 }
 

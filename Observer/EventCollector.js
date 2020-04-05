@@ -8,8 +8,8 @@ class EventCollector extends EventEmitter {
   }
 
   startListeners() {
-    this.observer.on('stats-update', (bar) => {
-      this.emit('notification', bar)
+    this.observer.on('stats-update', (ctx) => {
+      this.emit('notification', ctx)
     })
   }
 

@@ -1,8 +1,9 @@
 const ConsoleView = require('./ConsoleView')
 
-let template = (bar, waitingCapacity, seatingCapacity, openFor) => {
+let template = (ctx, waitingCapacity, seatingCapacity, openFor) => {
+  let bar = ctx.bar
   if(!bar)
-    return
+    bar = ctx
   const consoleView = new ConsoleView(bar, waitingCapacity, seatingCapacity, openFor)
   return consoleView.buildView()
 }

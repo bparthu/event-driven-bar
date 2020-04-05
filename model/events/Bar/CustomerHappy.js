@@ -1,16 +1,16 @@
 const Event = require('../base')
 
 class CustomerHappy extends Event {
-  constructor(bar) {
-    super(bar)
+  constructor() {
+    super()
   }
 
   getDescription(handler, customer) {
     console.log(`'${customer.getName()}' has left the bar with happy face`)
   }
 
-  async run(ctx, customer) {
-    this.bar.incrementSuccessCount()
+  async run(bar, customer) {
+    bar.incrementSuccessCount()
   }
 }
 

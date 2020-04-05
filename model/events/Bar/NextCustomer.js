@@ -1,18 +1,18 @@
 const Event = require('../base')
 
 class NextCustomer extends Event {
-  constructor(bar) {
-    super(bar)
+  constructor() {
+    super()
   }
 
   getDescription(handler, customer) {
     console.log(`Bar is handling next customer`)
   }
 
-  async run(ctx, customer) {
-    const nextCustomer = this.bar.getNextWaitingCustomer()
+  async run(bar, customer) {
+    const nextCustomer = bar.getNextWaitingCustomer()
     if(nextCustomer) {
-      this.bar.emit('seat-customer', nextCustomer)
+      bar.emit('seat-customer', nextCustomer)
     }
   }
 }

@@ -2,16 +2,16 @@ const _ = require('lodash')
 const Event = require('../base')
 
 class SeatCustomer extends Event {
-  constructor(bar) {
-    super(bar)
+  constructor() {
+    super()
   }
 
   getDescription(handler, customer) {
     console.log(`Bar is trying to seat '${customer.getName()}'`)
   }
 
-  async run(ctx, customer) {
-    if(this.bar.seatCustomer(customer)){
+  async run(bar, customer) {
+    if(bar.seatCustomer(customer)){
       customer.emit('ready-to-drink')
       return
     }

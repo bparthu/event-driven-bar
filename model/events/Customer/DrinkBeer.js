@@ -3,8 +3,8 @@ const CONSTANTS = require('../../../constants')
 const util = require('../../../util')
 
 class DrinkBeer extends Event {
-  constructor(bar) {
-    super(bar)
+  constructor() {
+    super()
   }
 
   getDescription(handler, customer) {
@@ -16,7 +16,7 @@ class DrinkBeer extends Event {
       customer.emit('ready-to-drink')
       return
     }
-    this.bar.emit('handle-check', customer)
+    customer.getBar().emit('handle-check', customer)
   }
 }
 

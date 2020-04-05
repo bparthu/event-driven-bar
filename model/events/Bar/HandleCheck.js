@@ -2,19 +2,19 @@ const _ = require('lodash')
 const Event = require('../base')
 
 class HandleCheck extends Event {
-  constructor(bar) {
-    super(bar)
+  constructor() {
+    super()
   }
 
   getDescription(handler, customer) {
     console.log(`'${customer.getName()}' wants to pay the bill`)
   }
 
-  async run(ctx, customer) {
+  async run(bar, customer) {
     // produces 'exit-from-seat' event on bar
-    this.bar.removeCustomerFromSeating(customer)
-    this.bar.emit('customer-happy', customer)
-    this.bar.emit('next-customer', customer)
+    bar.removeCustomerFromSeating(customer)
+    bar.emit('customer-happy', customer)
+    bar.emit('next-customer', customer)
   }
 }
 

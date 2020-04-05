@@ -2,8 +2,8 @@ const _ = require('lodash')
 const eventBus = require('../EventBus')
 
 class Event {
-  constructor(bar) {
-    this.bar = bar
+  constructor() {
+
   }
 
   before(handler) {
@@ -16,7 +16,7 @@ class Event {
   }
 
   after(handler, customer) {
-    handler.notifyStatUpdates(this.bar)
+    handler.notifyStatUpdates(handler)
   }
 
   async execute(handler, customer) {
