@@ -6,17 +6,12 @@ class EventCollector extends EventEmitter {
   constructor(observer) {
     super()
     this.observer = observer
-    this.handlers = {}
+    this.customerMap = {}
   }
 
   startListeners() {
-    this.observer.on('event', (eventName) => {
-      this.emit('notification', this)
-    })
-
-    this.observer.on('stats-update', (handler) => {
-      this.handlers[handler.constructor.name] = handler
-      this.emit('notification', this)
+    this.observer.on('stats-update', (bar) => {
+      this.emit('notification', bar)
     })
   }
 

@@ -1,7 +1,6 @@
 const ConsoleView = require('./ConsoleView')
 
-let template = (event, waitingCapacity, seatingCapacity, openFor) => {
-  const bar = event.handlers.Bar
+let template = (bar, waitingCapacity, seatingCapacity, openFor) => {
   if(!bar)
     return
   const consoleView = new ConsoleView(bar, waitingCapacity, seatingCapacity, openFor)
