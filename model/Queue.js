@@ -1,5 +1,5 @@
 class Queue {
-  items = []
+  #items = []
   #length
 
   constructor(length) {
@@ -7,42 +7,35 @@ class Queue {
   }
 
   list() {
-    return this.items
+    return this.#items
   }
 
   enqueue(item) {
-    /*
-    if(this.#items.length === this.#length)
+    if(this.isFull())
       return false
     
-    this.#items.push(item)
+    this.list().push(item)
     return true
-    */
-   throw new Error('Enqueue not implemented')
   }
 
   dequeue() {
-    throw new Error('Dequeue not implemented')
-  }
-
-  getItem(idx) {
-    return this.items[idx]
+    return this.list().shift()
   }
 
   indexOf(target) {
-    return this.items.indexOf(target)
+    return this.#items.indexOf(target)
   }
 
   splice(idx, count) {
-    return this.items.splice(idx, count)
+    return this.#items.splice(idx, count)
   }
 
   getLength() {
-    return this.items.length
+    return this.#items.length
   }
 
   isFull() {
-    if(this.items.length === this.#length){
+    if(this.#items.length === this.#length){
       return true
     }
     return false

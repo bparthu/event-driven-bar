@@ -15,7 +15,8 @@ class ConsoleView {
   }
 
   getBarStatus() {
-    return `Bar status : ${this.#bar.isOpen() ? `🍺 open (${this.#openFor - this.#bar.openSince()}) 🍺` : 'closed'}`
+    return `
+    Bar status : ${this.#bar.isOpen() ? `🍺 open (${this.#openFor - this.#bar.openSince()}) 🍺` : 'closed'}`
   }
 
   getBarConfig() {

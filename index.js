@@ -1,22 +1,20 @@
-// const BarManagement = require('./model/BarManagement')
-
-// BarManagement.start()
-
 const faker = require('faker')
 const logUpdate = require('log-update')
+const EventEmitter = require('events')
 const BarManager = require('./model/BarManager')
 const Customer = require('./model/Customer')
 const CONSTANTS = require('./constants')
 const util = require('./util')
 const template = require('./template')
 
-const Observer = require('./Observer/Observer')
-const observer = new Observer()
+// instantiate the observer
+const observer = new EventEmitter()
 
+// instantiate event collector with the observer
 const EventCollector = require('./Observer/EventCollector')
 const eventCollector = new EventCollector(observer)
 
-const test = {
+const Patron = {
   generator: async function*(bar) {
     while(bar.isOpen()) {
       await util.takeTime(util.getRandomInt(CONSTANTS.CUSTOMER_ARRIVAL_TIME_MIN, CONSTANTS.CUSTOMER_ARRIVAL_TIME_MAX))
@@ -26,47 +24,24 @@ const test = {
 }
 
 BarManager
-  .createBar('NodeJS beer bar', {
+  .createBar(`${faker.name.firstName()}'s beer bar`, {
     seatingCapacity: CONSTANTS.SEATING_CAPACITY,
     waitingCapacity: CONSTANTS.WAITING_CAPACITY
   })
   .addObserver(observer)
   .closeAfter(CONSTANTS.BAR_TIME, CONSTANTS.PER_HOUR_IN_MS)
   .openBar(async (bar) => {
-    for await(const customer of test.generator(bar)) {
+    for await(const customer of Patron.generator(bar)) {
       await customer.registerEvents()
       customer.addObserver(observer)
       bar.emit('new-customer', customer)
     }
-
-    /*
-    for(let i=0; i<1; i++) {
-      await util.takeTime(util.getRandomInt(CONSTANTS.CUSTOMER_ARRIVAL_TIME_MIN, CONSTANTS.CUSTOMER_ARRIVAL_TIME_MAX))
-      const customer = new Customer(`${faker.name.firstName()} ${faker.name.lastName()}`) 
-      await customer.registerEvents()
-      customer.addObserver(observer)
-      bar.emit('new-customer', customer)
-    }
-    */
-    
-    
-    
-
   })
 
+  // start external event listeners
   eventCollector.startListeners()
-
-  /*
-  eventCollector.on('notification', (event) => {
-    logUpdate(`
-    ${JSON.stringify(event)}
-    `)
-  })
-  */
-
-  
+  // notification event is trigger anytime an event happens within the bar
   eventCollector.on('notification', (bar) => {
     logUpdate(template(bar, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY, CONSTANTS.BAR_TIME))
-    //template(event, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY, CONSTANTS.BAR_TIME)
   })
   

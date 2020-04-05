@@ -1,4 +1,4 @@
-const Queue = require('./BlockingQ')
+const Queue = require('./Queue')
 const BarObservable = require('./BarObservable')
 const util = require('../util')
 
@@ -147,10 +147,6 @@ class Bar extends BarObservable {
       successCount: this.getSuccessCount(),
       lossCount: this.getLossCount()
     }
-  }
-
-  getSeatedCustomer(idx) {
-    return this.#seating.getItem(idx)
   }
 
   getSeatedCustomers() {

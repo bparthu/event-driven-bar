@@ -1,6 +1,4 @@
 const EventEmitter = require('events')
-const Observer = require('./Observer')
-const Queue = require('../model/EvictingQ')
 
 class EventCollector extends EventEmitter {
   constructor(observer) {
