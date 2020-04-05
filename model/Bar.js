@@ -149,6 +149,10 @@ class Bar extends BarObservable {
     }
   }
 
+  getSeatedCustomer(idx) {
+    return this.#seating.getItem(idx)
+  }
+
   getSeatCount() {
     return this.#seating.getLength()
   }

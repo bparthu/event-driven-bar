@@ -7,6 +7,7 @@ const eventBus = require('./EventBus')
 
 class BarObservable extends EventEmitter {
   #observers = []
+  #currentEvent = null
 
   constructor(registerInBus) {
     super()
@@ -41,9 +42,14 @@ class BarObservable extends EventEmitter {
   }
 
   notifyEvents(eventName) {
+    this.#currentEvent = eventName
     for(const observer of this.#observers) {
       observer.emit('event', eventName)
     }
+  }
+
+  getCurrentEvent() {
+    return this.#currentEvent
   }
 
   notifyStatUpdates() {

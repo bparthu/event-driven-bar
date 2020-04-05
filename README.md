@@ -97,3 +97,7 @@ track total number of beers served
 add price for beer
 track total revenue
 bar open since time lot
+
+make map out of customer name from current seated customer
+make different parts of template and combine it together
+waiting queue view

@@ -22,9 +22,13 @@ class Customer extends BarObservable {
     return this.#numberOfDrinks
   }
 
+  getCurrentDrinks() {
+    return this.#currentDrink
+  }
+
   getStats() {
     return {
-      currentDrink: this.#currentDrink
+      currentDrink: this.getCurrentDrinks()
     }
   }
 

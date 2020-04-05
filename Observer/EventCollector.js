@@ -7,12 +7,10 @@ class EventCollector extends EventEmitter {
     super()
     this.observer = observer
     this.handlers = {}
-    this.queue = new Queue(5)
   }
 
   startListeners() {
     this.observer.on('event', (eventName) => {
-      this.queue.enqueue(eventName)
       this.emit('notification', this)
     })
 

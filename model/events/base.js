@@ -6,9 +6,9 @@ class Event {
     this.bar = bar
   }
 
-  before(handler, customer) {
+  before(handler) {
     handler.notifyEvents(this.getEventName())
-    this.track(handler, customer)
+    this.track(handler)
   }
 
   async run(handler, customer) {

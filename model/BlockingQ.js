@@ -16,6 +16,7 @@ class BlockingQ extends Queue {
   dequeue() {
     return this.list().shift()
   }
+  
 }
 
 module.exports = BlockingQ

@@ -25,6 +25,10 @@ class Queue {
     throw new Error('Dequeue not implemented')
   }
 
+  getItem(idx) {
+    return this.items[idx]
+  }
+
   indexOf(target) {
     return this.items.indexOf(target)
   }
