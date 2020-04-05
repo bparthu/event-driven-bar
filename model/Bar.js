@@ -9,7 +9,7 @@ class Bar extends BarObservable {
   #successCount
   #lossCount
   #isOpen=false
-  #figlet
+  #neonSign
   #totalCount
   #BeerSoldCount
   #openSince
@@ -27,14 +27,14 @@ class Bar extends BarObservable {
   }
 
   async openBar(cb) {
-    this.#figlet = await util.figlet(this.getName())
+    this.#neonSign = await util.figlet(this.getName())
     await this.registerEvents()
     this.#isOpen = true
     cb(this)
   }
 
-  getFiglet() {
-    return this.#figlet
+  getNeonSign() {
+    return this.#neonSign
   }
 
   closeBar() {

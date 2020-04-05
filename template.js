@@ -17,7 +17,7 @@ let template = (event, waitingCapacity, seatingCapacity, openFor) => {
   const customer8 = bar.getSeatedCustomer(8)
   const customer9 = bar.getSeatedCustomer(9)
 
-  return `${bar.getFiglet()}
+  return `${bar.getNeonSign()}
   Bar status : ${bar.isOpen() ? `🍺 open (${openFor - bar.openSince()}) 🍺` : 'closed'}
 
    -------------------------
