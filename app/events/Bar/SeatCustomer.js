@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const Event = require('../Base')
 
 class SeatCustomer extends Event {
