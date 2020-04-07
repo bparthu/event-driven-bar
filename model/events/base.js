@@ -3,7 +3,6 @@ const _ = require('lodash')
 class Event {
   before(handler) {
     handler.setCurrentEvent(this.getEventName())
-    handler.notify('stats-update')
   }
 
   async run(handler, customer) {

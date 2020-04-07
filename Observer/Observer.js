@@ -1,10 +1,14 @@
 const EventEmitter = require('events')
 
 class Observer extends EventEmitter {
-  #observer
-  constructor(observer) {
+  #id
+  constructor(id) {
     super()
-    this.#observer = observer
+    this.#id = id
+  }
+
+  getId() {
+    return this.#id
   }
 
   getListeners() {
@@ -14,7 +18,7 @@ class Observer extends EventEmitter {
   startListeners() {
     let listeners = this.getListeners()
     for(const eventName in listeners) {
-      this.#observer.on(eventName, listeners[eventName])
+      this.on(eventName, listeners[eventName])
     }
   }
 }

@@ -32,6 +32,11 @@ class BarObservable extends EventEmitter {
     })
   }
 
+  setObservers(observers) {
+    this.#observers = observers
+    return this
+  }
+
   addObserver(observer) {
     this.#observers.push(observer)
     return this

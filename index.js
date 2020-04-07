@@ -7,11 +7,10 @@ const CONSTANTS = require('./constants')
 const util = require('./util')
 const template = require('./template')
 const ConsoleObserver = require('./Observer/ConsoleObserver')
+const uuid = require('uuid').v4
 
-// instantiate the observer
-const observer = new EventEmitter()
 // instantiate Console Observer
-const consoleObserver = new ConsoleObserver(observer)
+const consoleObserver = new ConsoleObserver(uuid())
 consoleObserver.startListeners()
 
 const Patron = {
@@ -28,18 +27,17 @@ BarManager
     seatingCapacity: CONSTANTS.SEATING_CAPACITY,
     waitingCapacity: CONSTANTS.WAITING_CAPACITY
   })
-  .addObserver(observer)
+  .setObservers([consoleObserver])
   .closeAfter(CONSTANTS.BAR_TIME, CONSTANTS.PER_HOUR_IN_MS)
   .openBar(async (bar) => {
     for await(const customer of Patron.generator(bar)) {
       await customer.registerEvents()
-      customer.addObserver(observer)
+      customer.setObservers([consoleObserver])
       bar.emit('new-customer', customer)
     }
   })
 
   // notification event is trigger anytime an event happens within the bar
-  consoleObserver.on('notification', (ctx) => {
-    logUpdate(template(ctx, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY, CONSTANTS.BAR_TIME))
+  consoleObserver.on('notification', (observer, ctx) => {
+    logUpdate(template(observer.getId(), ctx, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY, CONSTANTS.BAR_TIME))
   })
-  

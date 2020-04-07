@@ -1,9 +1,11 @@
 class ConsoleView {
+  #id
   #bar
   #waitingCapacity
   #seatingCapacity
   #openFor
-  constructor(bar, waitingCapacity, seatingCapacity, openFor) {
+  constructor(id, bar, waitingCapacity, seatingCapacity, openFor) {
+    this.#id = id
     this.#bar = bar
     this.#waitingCapacity = waitingCapacity
     this.#seatingCapacity = seatingCapacity
@@ -12,6 +14,13 @@ class ConsoleView {
 
   getNeonSign() {
     return this.#bar.getNeonSign()
+  }
+
+  getConsoleId() {
+    return `
+    ---------------------------------------------------
+    view instance id | ${this.#id}
+    ---------------------------------------------------`
   }
 
   getBarStatus() {
@@ -64,6 +73,7 @@ class ConsoleView {
 
   buildView() {
     return `${this.getNeonSign()}
+    ${this.getConsoleId()}
     ${this.getBarStatus()}
     ${this.getBarConfig()}
     ${this.getBarStats()}
