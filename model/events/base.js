@@ -1,37 +1,23 @@
 const _ = require('lodash')
 
 class Event {
-  constructor() {
-
-  }
-
   before(handler) {
-    handler.notifyEvents(this.getEventName())
-    this.track(handler)
+    handler.setCurrentEvent(this.getEventName())
+    handler.notify('stats-update')
   }
 
   async run(handler, customer) {
-
+    throw new Error('run(): not implemented')
   }
 
-  after(handler, customer) {
-    handler.notifyStatUpdates(handler)
+  after(handler) {
+    handler.notify('stats-update')
   }
 
   async execute(handler, customer) {
-    this.before(handler, customer)
+    this.before(handler)
     await this.run(handler, customer)
-    this.after(handler, customer)
-  }
-
-  getDescription(handler, customer) {
-    console.log(`customer name: ${customer.getName()} - ${handler.constructor.name} - ${this.getEventName()}`)
-  }
-
-  track(handler, customer) {
-    if(!customer)
-      customer = handler
-    //this.getDescription(handler, customer)
+    this.after(handler)
   }
 
   getEventName() {

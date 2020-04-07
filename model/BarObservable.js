@@ -37,39 +37,18 @@ class BarObservable extends EventEmitter {
     return this
   }
 
-  notifyEvents(eventName) {
-    this.#currentEvent = eventName
+  setCurrentEvent(currentEvent) {
+    this.#currentEvent = currentEvent
+  }
+
+  notify(eventName) {
     for(const observer of this.#observers) {
-      observer.emit('event', eventName)
+      observer.emit(eventName, this)
     }
   }
 
   getCurrentEvent() {
     return this.#currentEvent
-  }
-
-  notifyStatUpdates(ctx) {
-    for(const observer of this.#observers) {
-      observer.emit('stats-update', ctx)
-    }
-  }
-
-  beforeEmit(eventName, ...params) {
-    this.track(eventName, ...params)
-  }
-
-  afterEmit(eventName, ...params) {
-
-  }
-
-  track(eventName, ...params) {
-    
-  }
-
-  emit(eventName, ...params) {
-    this.beforeEmit(eventName, ...params)
-    super.emit(eventName, ...params)
-    this.afterEmit(eventName, ...params)
   }
 }
 
