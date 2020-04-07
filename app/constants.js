@@ -1,6 +1,6 @@
 const SEATING_CAPACITY=10
 const WAITING_CAPACITY=10
-const EVENTS_DIR='events'
+const EVENTS_DIR='app/model/events'
 const CUSTOMER_DRINKS_MIN = 1
 const CUSTOMER_DRINKS_MAX = 5
 const CUSTOMER_DRINK_TIME_MIN=100 // 100

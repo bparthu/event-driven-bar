@@ -13,7 +13,7 @@ class Observable extends EventEmitter {
   }
 
   async registerEvents() {
-    const directoryPath = path.join(__dirname, CONSTANT.EVENTS_DIR, this.constructor.name)
+    const directoryPath = path.join(process.cwd(), CONSTANT.EVENTS_DIR, this.constructor.name)
     return await new Promise((resolve, reject) => {
       fs.readdir(directoryPath, (err, files) => {
         if(err)
