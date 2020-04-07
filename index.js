@@ -6,14 +6,13 @@ const Customer = require('./model/Customer')
 const CONSTANTS = require('./constants')
 const util = require('./util')
 const template = require('./template')
+const ConsoleObserver = require('./Observer/ConsoleObserver')
 
 // instantiate the observer
 const observer = new EventEmitter()
-
-// instantiate event collector with the observer
-const EventCollector = require('./Observer/EventCollector')
-const eventCollector = new EventCollector()
-eventCollector.addObserver(observer)
+// instantiate Console Observer
+const consoleObserver = new ConsoleObserver(observer)
+consoleObserver.startListeners()
 
 const Patron = {
   generator: async function*(bar) {
@@ -39,10 +38,8 @@ BarManager
     }
   })
 
-  // start external event listeners
-  eventCollector.startListeners()
   // notification event is trigger anytime an event happens within the bar
-  eventCollector.on('notification', (ctx) => {
+  consoleObserver.on('notification', (ctx) => {
     logUpdate(template(ctx, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY, CONSTANTS.BAR_TIME))
   })
   
