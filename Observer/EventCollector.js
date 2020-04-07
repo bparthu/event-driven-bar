@@ -1,20 +1,21 @@
 const EventEmitter = require('events')
 
 class EventCollector extends EventEmitter {
-  constructor(observer) {
+  #observers = []
+  constructor() {
     super()
-    this.observer = observer
-    this.customerMap = {}
+  }
+
+  addObserver(observer) {
+    this.#observers.push(observer)
   }
 
   startListeners() {
-    this.observer.on('stats-update', (ctx) => {
-      this.emit('notification', ctx)
-    })
-  }
-
-  getStats() {
-    return this.stats
+    for(const observer of this.#observers) {
+      observer.on('stats-update', (ctx) => {
+        this.emit('notification', ctx)
+      })
+    }
   }
 }
 

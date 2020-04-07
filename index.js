@@ -12,7 +12,8 @@ const observer = new EventEmitter()
 
 // instantiate event collector with the observer
 const EventCollector = require('./Observer/EventCollector')
-const eventCollector = new EventCollector(observer)
+const eventCollector = new EventCollector()
+eventCollector.addObserver(observer)
 
 const Patron = {
   generator: async function*(bar) {
