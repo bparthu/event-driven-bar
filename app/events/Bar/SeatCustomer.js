@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const Event = require('../base')
+const Event = require('../Base')
 
 class SeatCustomer extends Event {
   async run(bar, customer) {

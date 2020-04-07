@@ -1,4 +1,4 @@
-const Event = require('../base')
+const Event = require('../Base')
 
 class NextCustomer extends Event {
   async run(bar, customer) {

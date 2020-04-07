@@ -1,6 +1,4 @@
-const Event = require('../base')
-const CONSTANTS = require('../../../constants')
-const util = require('../../../util')
+const Event = require('../Base')
 
 class DrinkBeer extends Event {
   async run(customer) {
