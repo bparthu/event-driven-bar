@@ -1,6 +1,6 @@
 const faker = require('faker')
 const util = require('../util')
-const Customer = require('./Customer')
+const Customer = require('./Observable/Customer')
 const CONSTANTS = require('../constants')
 
 class Bouncer {

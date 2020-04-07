@@ -2,7 +2,7 @@ const EventEmitter = require('events')
 const path = require('path')
 const fs = require('fs')
 const _ = require('lodash')
-const CONSTANT = require('../constants')
+const CONSTANT = require('../../constants')
 
 class Observable extends EventEmitter {
   #observers = []

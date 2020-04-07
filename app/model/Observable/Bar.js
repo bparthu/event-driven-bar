@@ -1,6 +1,6 @@
-const Queue = require('./Queue')
-const Observable = require('./Observable')
-const util = require('../util')
+const Queue = require('../Queue')
+const Observable = require('./Base')
+const util = require('../../util')
 
 class Bar extends Observable {
   #name

@@ -1,6 +1,6 @@
-const Observable = require('./Observable')
-const util = require('../util')
-const CONSTANTS = require('../constants')
+const Observable = require('./Base')
+const util = require('../../util')
+const CONSTANTS = require('../../constants')
 
 class Customer extends Observable {
   #name
