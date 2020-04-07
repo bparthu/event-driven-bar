@@ -4,7 +4,7 @@ const uuid = require('uuid').v4
 const BarManager = require('./model/BarManager')
 const CONSTANTS = require('./constants')
 const template = require('./template')
-const ConsoleObserver = require('./Observer/ConsoleObserver')
+const ConsoleObserver = require('./model/Observer/ConsoleObserver')
 const Bouncer = require('./model/Bouncer')
 
 // instantiate Console Observer

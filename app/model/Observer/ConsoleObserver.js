@@ -1,4 +1,4 @@
-const Observer = require('./Observer')
+const Observer = require('./Base')
 
 class ConsoleObserver extends Observer {
   constructor(id) {
