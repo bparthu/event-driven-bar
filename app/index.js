@@ -1,11 +1,11 @@
 const faker = require('faker')
 const logUpdate = require('log-update')
 const uuid = require('uuid').v4
-const BarManager = require('./model/BarManager')
+const BarManager = require('./model/Domain/BarManager')
 const CONSTANTS = require('./constants')
 const template = require('./template')
 const ConsoleObserver = require('./model/Observer/ConsoleObserver')
-const Bouncer = require('./model/Bouncer')
+const Bouncer = require('./model/Domain/Bouncer')
 
 // instantiate Console Observer
 const consoleObserver = new ConsoleObserver(uuid())

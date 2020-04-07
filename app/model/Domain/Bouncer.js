@@ -1,7 +1,7 @@
 const faker = require('faker')
-const util = require('../util')
-const Customer = require('./Observable/Customer')
-const CONSTANTS = require('../constants')
+const util = require('../../util')
+const Customer = require('../Observable/Customer')
+const CONSTANTS = require('../../constants')
 
 class Bouncer {
   static async *receiveNewCustomer(bar) {

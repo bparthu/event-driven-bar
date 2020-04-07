@@ -1,4 +1,4 @@
-const Queue = require('../Queue')
+const Queue = require('../Helper/Queue')
 const Observable = require('./Base')
 const util = require('../../util')
 
