@@ -1,5 +1,4 @@
 const _ = require('lodash')
-const eventBus = require('../EventBus')
 
 class Event {
   constructor() {

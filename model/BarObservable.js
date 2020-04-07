@@ -3,7 +3,6 @@ const path = require('path')
 const fs = require('fs')
 const _ = require('lodash')
 const CONSTANT = require('../constants')
-const eventBus = require('./EventBus')
 
 class BarObservable extends EventEmitter {
   #observers = []
