@@ -1,8 +1,8 @@
 const Queue = require('./Queue')
-const BarObservable = require('./BarObservable')
+const Observable = require('./Observable')
 const util = require('../util')
 
-class Bar extends BarObservable {
+class Bar extends Observable {
   #name
   #seating
   #waitQ

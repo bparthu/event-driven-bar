@@ -1,8 +1,8 @@
-const BarObservable = require('./BarObservable')
+const Observable = require('./Observable')
 const util = require('../util')
 const CONSTANTS = require('../constants')
 
-class Customer extends BarObservable {
+class Customer extends Observable {
   #name
   #numberOfDrinks
   #currentDrink

@@ -4,7 +4,7 @@ const fs = require('fs')
 const _ = require('lodash')
 const CONSTANT = require('../constants')
 
-class BarObservable extends EventEmitter {
+class Observable extends EventEmitter {
   #observers = []
   #currentEvent = null
 
@@ -57,4 +57,4 @@ class BarObservable extends EventEmitter {
   }
 }
 
-module.exports = BarObservable
+module.exports = Observable

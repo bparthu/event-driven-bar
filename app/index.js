@@ -1,27 +1,25 @@
 const faker = require('faker')
 const logUpdate = require('log-update')
-const EventEmitter = require('events')
+const uuid = require('uuid').v4
 const BarManager = require('./model/BarManager')
 const Customer = require('./model/Customer')
 const CONSTANTS = require('./constants')
 const util = require('./util')
 const template = require('./template')
 const ConsoleObserver = require('./Observer/ConsoleObserver')
-const uuid = require('uuid').v4
+const Bouncer = require('./model/Bouncer')
 
 // instantiate Console Observer
 const consoleObserver = new ConsoleObserver(uuid())
+// start listeners
 consoleObserver.startListeners()
 
-const Patron = {
-  generator: async function*(bar) {
-    while(bar.isOpen()) {
-      await util.takeTime(util.getRandomInt(CONSTANTS.CUSTOMER_ARRIVAL_TIME_MIN, CONSTANTS.CUSTOMER_ARRIVAL_TIME_MAX))
-      yield new Customer(`${faker.name.firstName()} ${faker.name.lastName()}`, bar) 
-    }
-  }
-}
-
+/*
+  1. create a named bar with configured seating capacity and waiting capacity
+  2. add external observers
+  3. bar should be closed after being open for configured time limit
+  4. customers can visit the bar once the bar is opened
+*/
 BarManager
   .createBar(`${faker.name.firstName()}'s beer bar`, {
     seatingCapacity: CONSTANTS.SEATING_CAPACITY,
@@ -30,14 +28,14 @@ BarManager
   .setObservers([consoleObserver])
   .closeAfter(CONSTANTS.BAR_TIME, CONSTANTS.PER_HOUR_IN_MS)
   .openBar(async (bar) => {
-    for await(const customer of Patron.generator(bar)) {
+    for await(const customer of Bouncer.receiveNewCustomer(bar)) {
       await customer.registerEvents()
       customer.setObservers([consoleObserver])
       bar.emit('new-customer', customer)
     }
   })
 
-  // notification event is trigger anytime an event happens within the bar
+  // notification event is triggered when the state of bar changes
   consoleObserver.on('notification', (observer, ctx) => {
     logUpdate(template(observer.getId(), ctx, CONSTANTS.WAITING_CAPACITY, CONSTANTS.SEATING_CAPACITY, CONSTANTS.BAR_TIME))
   })
