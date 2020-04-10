@@ -13,9 +13,9 @@ class Event {
     handler.notify('stats-update')
   }
 
-  async execute(handler, customer) {
+  execute(handler, customer) {
     this.before(handler)
-    await this.run(handler, customer)
+    this.run(handler, customer)
     this.after(handler)
   }
 

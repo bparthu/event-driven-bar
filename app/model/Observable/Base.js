@@ -12,9 +12,9 @@ class Observable extends EventEmitter {
     super()
   }
 
-  async registerEvents() {
+  registerEvents() {
     const directoryPath = path.join(process.cwd(), CONSTANT.EVENTS_DIR, this.constructor.name)
-    return await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       fs.readdir(directoryPath, (err, files) => {
         if(err)
           return reject('error occured while registering events', err)
@@ -23,8 +23,8 @@ class Observable extends EventEmitter {
           const EventName = path.parse(file).name
           let Class = require(path.join(directoryPath, EventName))
           const event = new Class()
-          this.on(_.kebabCase(EventName), async (customer) => {
-            await event.execute(this, customer)
+          this.on(_.kebabCase(EventName), (customer) => {
+            event.execute(this, customer)
           })
           resolve()
         }
